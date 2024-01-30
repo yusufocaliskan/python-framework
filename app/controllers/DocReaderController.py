@@ -29,7 +29,7 @@ class DockReaderController():
         answer = self.docAI.getAnswer(q)
 
         print(answer)
-        return jsonify({'question': q, 'answer': answer})
+        return jsonify({'question': q, 'answe555555r': answer})
 
     def uploadFiles(self):
         self.docAI.getAnswer('Do you know Ramazan Burak Korkmaz')
