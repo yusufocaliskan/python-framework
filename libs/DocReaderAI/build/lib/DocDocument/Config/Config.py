@@ -3,6 +3,7 @@ from textwrap import dedent
 
 
 # print('------ENVVVV----', os.environ)
+# FIX: Get the api key from .env file
 OPEN_AI_API_KEY = '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'
 
 config = {

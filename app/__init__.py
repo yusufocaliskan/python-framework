@@ -1,19 +1,19 @@
-from flask import Flask
 from app.routes import Routes
 
 
 class Application:
-    app = Flask(__name__)
 
     dbConnector = ''
 
-    def __init__(self, connector):
+    def __init__(self, connector, app):
         self.dbConnector = connector()
 
-    def start(self):
+        self.app = app
+
+    def loadEnvironment(self):
 
         # Load the routes
         Routes(self.app)
 
         # Start the app
-        return self.app.run()
+        return self.app

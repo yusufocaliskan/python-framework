@@ -223,3 +223,22 @@ class DocDocument:
             print(
                 f"{self._ai_name}: {answer}\n------------------------------------------------"
             )
+
+    def procressQuestions(self, question):
+
+        self.user_input = question
+        # print(
+        #     f"{self._ai_name}: {self.start()}\n------------------------------------------------")
+        #
+        _, agent_name, document_uuid = self.choose_next_agent()
+        # ic(_, agent_name, document_uuid)
+        if document_uuid:
+            answer = self.run_agent_by_name(agent_name=agent_name,
+                                            document_uuid=document_uuid,
+                                            user_uuid=self.__user_uuid)
+        else:
+            answer = self.run_agent_by_name(agent_name=agent_name)
+        # print(
+        #     f"{self._ai_name}: {answer}\n------------------------------------------------"
+        # )
+        return answer

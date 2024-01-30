@@ -14,6 +14,7 @@ def get_chain_names() -> list[str]:
 
     """
 
+    # TODO: Fix the absolute path
     return [cls.replace(".py", "")
             for cls in os.listdir("libs/DocReaderAI/Model/Chains/Chains")
             if cls.endswith(".py") and not cls.startswith("__")]
