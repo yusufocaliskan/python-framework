@@ -1,12 +1,13 @@
 
 from flask import jsonify
 
-from app.DocReaderAI import DocReaderAI
+from libs.DocReaderAI import DocReaderAI
 
 
 class DockReaderController():
 
     def uploadFiles(self):
         docAI = DocReaderAI()
+        print('DOCAU---:', docAI)
 
         return jsonify({'message': 'FromClasss Uploaddinggg'})

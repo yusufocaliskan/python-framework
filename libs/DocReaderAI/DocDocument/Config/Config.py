@@ -1,9 +1,9 @@
 import os
 from textwrap import dedent
 
-from load_dotenv import load_dotenv
-load_dotenv()
-OPEN_AI_API_KEY = os.environ.get('OPEN_AI_API_KEY')
+
+# print('------ENVVVV----', os.environ)
+OPEN_AI_API_KEY = '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'
 
 config = {
     # Teacher AI Agent names.

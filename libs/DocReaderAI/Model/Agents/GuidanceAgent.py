@@ -12,7 +12,8 @@ class GuidanceAgent(BaseAgent):
     """
 
     def __init__(self, chain_names=config["agents"]["GuidanceAgent"]["chains"]):
-        super().__init__(chain_params=[{"chain_name": chain_name} for chain_name in chain_names])
+        super().__init__(chain_params=[
+            {"chain_name": chain_name} for chain_name in chain_names])
 
         # Definitions for all agents.
         # We embed this to prompt
