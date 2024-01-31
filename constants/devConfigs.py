@@ -11,3 +11,7 @@ class DevelopmentConfigs:
     dabase_url = 'mongodb://localhost:27017/'
     database_name = 'docReader'
     database_password = 'docReader'
+
+    # -- celery
+    celery_broker_url = 'redis://localhost:6379/0'  # Then use RabbitMQ
+    celery_result_backend = 'redis://localhost:6379/0'
