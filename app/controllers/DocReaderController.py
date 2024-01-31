@@ -1,4 +1,5 @@
 
+from app.models.DocReaderModel import DocReaderModel
 from flask import request, jsonify
 
 
@@ -13,9 +14,13 @@ class DockReaderController():
     # Agent
     docAI: DocReaderAI
 
+    model: DocReaderModel
+
     def __init__(self):
+
         self.docAI = DocReaderAI()
 
+        self.model = DocReaderModel()
         self.docAI.addFile(userId=1, docId=1, defs="Hasan Özkul's resume",  filePath=self.path +
                            "/libs/DocReaderAI/DocDocument/Document/hasan_ozkul.pdf")
 
@@ -26,10 +31,10 @@ class DockReaderController():
 
     def askQuestion(self):
         q = request.args.get('q')
-        answer = self.docAI.getAnswer(q)
+        # answer = self.docAI.getAnswer(q)
+        self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
 
-        print(answer)
-        return jsonify({'question': q, 'answer': answer})
+        return jsonify({'question': q, 'answer': 'test'})
 
     def uploadFiles(self):
         self.docAI.getAnswer('Do you know Ramazan Burak Korkmaz')

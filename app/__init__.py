@@ -4,19 +4,15 @@ from app.routes.v1 import Routes
 class Application:
 
     # Holds db
-    dbConnector = ''
+    dbConnector = None
 
     # Application Instance
-    appInstance = ''
+    appInstance = None
 
-    def __init__(self, dbConnector, appInstance):
-        self.dbConnector = dbConnector()
+    def __init__(self,  appInstance):
         self.appInstance = appInstance
 
     def loadEnvironment(self):
 
         # Load the routes
         Routes(self.appInstance)
-
-        # Start the app
-        return self.appInstance
