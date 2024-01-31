@@ -1,12 +1,18 @@
 
 from flask import Flask
+from flask_cors import CORS
 from app import Application
 from bin.MongoDBConnector import MongoDBConnector
+from confs import appConfigs
+
+# setup the app
+flaskApp = Flask(__name__)
+CORS(flaskApp)
+appInstance = Application(dbConnector=MongoDBConnector, appInstance=flaskApp)
+appInstance.loadEnvironment()
 
 
+# -- Run  the server
 if __name__ == '__main__':
-    flaskApp = Flask(__name__)
-    appInstance = Application(connector=MongoDBConnector, app=flaskApp)
-    appInstance.loadEnvironment()
-
-    flaskApp.run(host="127.0.0.1", port=5000, debug=True)
+    flaskApp.run(host=appConfigs.host, port=appConfigs.port,
+                 debug=appConfigs.debug)

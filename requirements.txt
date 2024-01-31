@@ -1,2 +1,8 @@
 Flask
-flask-cors
+flask_cors
+passlib
+pymongo
+PyJWT
+Flask-Caching
+Celery
+flask-socketio

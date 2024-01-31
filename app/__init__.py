@@ -1,19 +1,22 @@
-from app.routes import Routes
+from app.routes.v1 import Routes
 
 
 class Application:
 
+    # Holds db
     dbConnector = ''
 
-    def __init__(self, connector, app):
-        self.dbConnector = connector()
+    # Application Instance
+    appInstance = ''
 
-        self.app = app
+    def __init__(self, dbConnector, appInstance):
+        self.dbConnector = dbConnector()
+        self.appInstance = appInstance
 
     def loadEnvironment(self):
 
         # Load the routes
-        Routes(self.app)
+        Routes(self.appInstance)
 
         # Start the app
-        return self.app
+        return self.appInstance
