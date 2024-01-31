@@ -8,6 +8,6 @@ class DocReaderModel:
     def __init__(self) -> None:
         self.dbInstance = Database.getDBInstance()
 
-    def addMessage(self, message, userId):
+    def addMessage(self,  message, userId):
         self.dbInstance.todo.insert_one(
-            {'text': '----NewTRYTESTOOOO'})
+            {'tex=======t': '----NewTRYTESTOOOO'})
