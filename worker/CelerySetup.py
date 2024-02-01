@@ -1,16 +1,16 @@
 from celery import Celery
-from confs import appConfigs, appName
+import os
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL'),
+CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND')
 
-
-celeryInstance = Celery(
-    appName, broker=appConfigs.celery_broker_url, backend=appConfigs.celery_result_backend)
+celeryInstance = Celery('GptVerseDocReader', broker=CELERY_BROKER_URL,
+                        backend=CELERY_RESULT_BACKEND)
 
 
 def setupCelery(appInstance):
-    print('----------- [Creating Cellery] -----------')
-    appInstance.config['result_backend'] = appConfigs.celery_result_backend
-    appInstance.config['CELERY_broker_url'] = appConfigs.celery_broker_url
+    print('----------- [Clreating Cellery] -----------')
+    appInstance.config['result_backend'] = CELERY_RESULT_BACKEND
+    appInstance.config['CELERY_broker_url'] = CELERY_BROKER_URL
     celeryInstance.conf.result_expires = 60 * 5  # Save the result for 5min
     celeryInstance.conf.update(appInstance.config)
     return celeryInstance
-

@@ -61,11 +61,11 @@ services:
   # Celery
   aih-worker-celery:
     build:
-      context: .
+      context: ./worker/
       dockerfile: Dockerfile
     volumes:
       - ".:/app"
-    command: ["./bin/CeleryWorker"]
+    # command: ["./bin/CeleryWorker"]
     environment:
       CELERY_BROKER_URL: "redis://aih-worker-redis:6379/0"
       CELERY_RESULT_BACKEND: "redis://aih-worker-redis:6379/0"
