@@ -4,6 +4,8 @@ from app.models.DocReaderModel import DocReaderModel
 from worker.CelerySetup import celeryInstance
 from flask import request, jsonify
 
+from database.seeds.clients import generateAClient
+
 from libs.DocReaderAI import DocReaderAI
 import os
 
@@ -36,8 +38,7 @@ class DockReaderController():
     def askQuestion(self):
         q = request.args.get('q')
         answer = self.docAI.getAnswer(q)
-        # self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
-
+        self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
         # result = self.jobs.addOne.delay()
         # result.forget()
         # return jsonify({'result': result.status, 'answer': result.get()})
