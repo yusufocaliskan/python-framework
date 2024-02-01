@@ -4,7 +4,7 @@ from app.models.DocReaderModel import DocReaderModel
 from worker.CelerySetup import celeryInstance
 from flask import request, jsonify
 
-from libs.DocReaderAI import DocReaderAI
+# from libs.DocReaderAI import DocReaderAI
 import os
 
 
@@ -13,39 +13,35 @@ class DockReaderController():
     path = os.getcwd()
 
     # Agent
-    docAI: DocReaderAI
+    # docAI: DocReaderAI
     model: DocReaderModel
     jobs: DocReaderJobs
 
     def __init__(self):
 
-        self.docAI = DocReaderAI()
+        # self.docAI = DocReaderAI()
         self.model = DocReaderModel()
 
         self.jobs = DocReaderJobs()
 
-        self.docAI.addFile(userId=1, docId=1, defs="Hasan Özkul's resume",  filePath=self.path +
-                           "/libs/DocReaderAI/DocDocument/Document/hasan_ozkul.pdf")
-
-        self.docAI.addFile(userId=2, docId=2, defs="Ramazan Burak Korkmaz's resume",  filePath=self.path +
-                           "/libs/DocReaderAI/DocDocument/Document/RamazanBurakKorkmaz_16072023.pdf")
-
-        self.docAI.setFiles2TheAgentsMind(userId=1)
-
+        # self.docAI.addFile(userId=1, docId=1, defs="Hasan Özkul's resume",  filePath=self.path +
+        #                    "/libs/DocReaderAI/DocDocument/Document/hasan_ozkul.pdf")
+        #
+        # self.docAI.addFile(userId=2, docId=2, defs="Ramazan Burak Korkmaz's resume",  filePath=self.path +
+        #                    "/libs/DocReaderAI/DocDocument/Document/RamazanBurakKorkmaz_16072023.pdf")
+        #
+        # self.docAI.setFiles2TheAgentsMind(userId=1)
+        #
     def askQuestion(self):
         q = request.args.get('q')
         # answer = self.docAI.getAnswer(q)
-        # self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
+        self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
 
         result = self.jobs.addOne.delay()
-
-        if result.ready():
-            answer = result.get()
-        else:
-            answer = 'Görev hala işleniyor'
-
-        print('result.status--->', dir(result))
-        return jsonify({'result': result.status, 'answer': answer})
+        # result.forget()
+        return jsonify({'result': result.status, 'answer': result.get()})
+        # return jsonify({'result': result.status, 'answer': result.get()})
+        return jsonify({'result': 'TEst'})
 
     def getResult(self):
 

@@ -5,7 +5,7 @@ setup(
     version='1.0.0',
     packages=find_packages(),
     description='A Pdf Reader AI',
-    long_description=open('README.md').read(),
+    # long_description=open('README.md').read(),
     long_description_content_type='text/markdown',
     author='GPTVerse',
     author_email='support@gptverse.art',

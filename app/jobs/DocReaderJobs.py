@@ -7,5 +7,4 @@ class DocReaderJobs:
 
     @celeryInstance.task
     def addOne():
-        sleep(10)
-        return 'Silavvvvvvvv!'
+        return 'Sonucccc --- >Test--TEST'

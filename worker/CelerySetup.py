@@ -1,13 +1,16 @@
 from celery import Celery
-from confs import appName
+from confs import appConfigs, appName
+
 
 celeryInstance = Celery(
-    appName, broker='amqp://guest:guest@localhost:5672/', backend='mongodb://localhost:27017/')
+    appName, broker=appConfigs.celery_broker_url, backend=appConfigs.celery_result_backend)
 
 
 def setupCelery(appInstance):
-    # print('----------- [Creating Cellery] -----------')
-    appInstance.config['result_backend'] = 'mongodb://localhost:27017/'
-    appInstance.config['CELERY_broker_url'] = 'amqp://guest:guest@localhost:5672/'
+    print('----------- [Creating Cellery] -----------')
+    appInstance.config['result_backend'] = appConfigs.celery_result_backend
+    appInstance.config['CELERY_broker_url'] = appConfigs.celery_broker_url
+    celeryInstance.conf.result_expires = 60 * 5  # Save the result for 5min
     celeryInstance.conf.update(appInstance.config)
     return celeryInstance
+

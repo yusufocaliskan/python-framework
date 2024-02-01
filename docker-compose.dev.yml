@@ -1,0 +1,74 @@
+version: "3"
+services:
+  # - the main holder
+  aih-worker-app:
+    image: python:latest
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - "3000:3000"
+    environment:
+      FLASK_DEBUG: 1
+      FLASK_APP: "main.py"
+      CELERY_BROKER_URL: "redis://aih-worker-redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://aih-worker-redis:6379/0"
+    #Hot reload
+    volumes:
+      - ".:/app"
+    command: ["./bin/RunDevServer"]
+    depends_on:
+      - aih-worker-redis
+      - aih-worker-mongo
+
+  # RabbitMQ
+  # aih-worker-rabbitmq:
+  #   image: rabbitmq:3-management
+  #   environment:
+  #     RABBITMQ_ERLANG_COOKIE: "SWQOKODSQALRPCLNMEQG"
+  #     RABBITMQ_DEFAULT_USER: ${RABBITMQ_USER}
+  #     RABBITMQ_DEFAULT_PASS: ${RABBITMQ_PASS}
+  #   ports:
+  #     - "15672:15672"
+  #     - "5672:5672"
+  #   volumes:
+  #     - ./storage/rabbitmqData:/data
+  #   healthcheck:
+  #     test: ["CMD", "curl", "-f", "http://localhost:15672"]
+  #     interval: 30s
+  #     timeout: 10s
+  #     retries: 5
+  #
+  # Mongo
+  aih-worker-mongo:
+    image: "mongo:latest"
+    ports:
+      - "27017:27017"
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
+      MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
+    volumes:
+      - ./storage/mongoData:/data/db
+
+  # - Redis
+  aih-worker-redis:
+    image: "redis:alpine"
+    volumes:
+      - ./storage/redisData:/data
+    ports:
+      - "6379:6379"
+
+  # Celery
+  aih-worker-celery:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    volumes:
+      - ".:/app"
+    command: ["./bin/CeleryWorker"]
+    environment:
+      CELERY_BROKER_URL: "redis://aih-worker-redis:6379/0"
+      CELERY_RESULT_BACKEND: "redis://aih-worker-redis:6379/0"
+    depends_on:
+      - aih-worker-app
+      - aih-worker-redis

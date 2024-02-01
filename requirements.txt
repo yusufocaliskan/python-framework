@@ -6,3 +6,7 @@ PyJWT
 Flask-Caching
 Celery
 flask-socketio
+setuptools_rust
+gunicorn
+redis
+waitress
