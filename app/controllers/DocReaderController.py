@@ -1,7 +1,8 @@
 
+from app.jobs.DocReaderJobs import DocReaderJobs
 from app.models.DocReaderModel import DocReaderModel
+from worker.CelerySetup import celeryInstance
 from flask import request, jsonify
-
 
 from libs.DocReaderAI import DocReaderAI
 import os
@@ -13,14 +14,16 @@ class DockReaderController():
 
     # Agent
     docAI: DocReaderAI
-
     model: DocReaderModel
+    jobs: DocReaderJobs
 
     def __init__(self):
 
         self.docAI = DocReaderAI()
-
         self.model = DocReaderModel()
+
+        self.jobs = DocReaderJobs()
+
         self.docAI.addFile(userId=1, docId=1, defs="Hasan Özkul's resume",  filePath=self.path +
                            "/libs/DocReaderAI/DocDocument/Document/hasan_ozkul.pdf")
 
@@ -32,9 +35,24 @@ class DockReaderController():
     def askQuestion(self):
         q = request.args.get('q')
         # answer = self.docAI.getAnswer(q)
-        self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
+        # self.model.addMessage(message='Testing SVVVVV', userId=2432543245324)
 
-        return jsonify({'question': q, 'answer': 'test'})
+        result = self.jobs.addOne.delay()
+
+        if result.ready():
+            answer = result.get()
+        else:
+            answer = 'Görev hala işleniyor'
+
+        print('result.status--->', dir(result))
+        return jsonify({'result': result.status, 'answer': answer})
+
+    def getResult(self):
+
+        result = celeryInstance.send_task('app.jobs.DocReaderJobs.addOne')
+        print('celeryInstanceceleryInstance-->>', dir(celeryInstance))
+
+        return jsonify({'result': result.status, 'answer': result.get()})
 
     def uploadFiles(self):
         self.docAI.getAnswer('Do you know Ramazan Burak Korkmaz')

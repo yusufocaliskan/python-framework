@@ -19,3 +19,10 @@ def askQuestion():
     # -- to ask a question to the agent
     # -- about uploaded files
     return docController.askQuestion()
+
+
+@doc_read_routes.route('/result', methods=['GET'])
+def getResult():
+    # -- to ask a question to the agent
+    # -- about uploaded files
+    return docController.getResult()
