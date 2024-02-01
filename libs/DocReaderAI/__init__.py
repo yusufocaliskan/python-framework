@@ -1,6 +1,6 @@
 # IMPORTS
-from Model.PDFWorker.PDFWorker import PDFWorker
-from Model.AI.DocDocument import DocDocument
+from .Model.PDFWorker.PDFWorker import PDFWorker
+from .Model.AI.DocDocument import DocDocument
 import os
 
 

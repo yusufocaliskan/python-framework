@@ -10,3 +10,5 @@ setuptools_rust
 gunicorn
 redis
 waitress
+
+chromadb

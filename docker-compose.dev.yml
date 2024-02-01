@@ -32,7 +32,7 @@ services:
   #     - "15672:15672"
   #     - "5672:5672"
   #   volumes:
-  #     - ./storage/rabbitmqData:/data
+  #     - ./_storage/rabbitmqData:/data
   #   healthcheck:
   #     test: ["CMD", "curl", "-f", "http://localhost:15672"]
   #     interval: 30s
@@ -48,13 +48,13 @@ services:
       MONGO_INITDB_ROOT_USERNAME: ${MONGO_DB_USER}
       MONGO_INITDB_ROOT_PASSWORD: ${MONGO_DB_PASSWORD}
     volumes:
-      - ./storage/mongoData:/data/db
+      - ./_storage/mongoData:/data/db
 
   # - Redis
   aih-worker-redis:
     image: "redis:alpine"
     volumes:
-      - ./storage/redisData:/data
+      - ./_storage/redisData:/data
     ports:
       - "6379:6379"
 
