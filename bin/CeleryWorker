@@ -1,2 +1,2 @@
 #!/bin/bash
-celery -A main worker --loglevel=Info
+celery -A worker.CelerySetup worker --loglevel=Info

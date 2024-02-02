@@ -1,18 +1,17 @@
-from worker.CelerySetup import setupCelery, celeryInstance
 from flask import Flask
-from app import Application
-from confs import appConfigs, appName
 from waitress import serve
 
+from src import Application
+
 # Setup the flasskk
-appInstance = Flask(appName)
+appInstance = Flask('GptVerseDocReader')
 Application().setup(appInstance)
 
 
 if __name__ == '__main__':
+
     # Dev = Run the server
-    appInstance.run(host=appConfigs.host, port=appConfigs.port,
-                    debug=appConfigs.debug)
+    appInstance.run(host='0.0.0.0', port=3000, debug=True)
 
     # Production = Run the server
     # serve(appInstance, host="0.0.0.0", port=appConfigs.port)
